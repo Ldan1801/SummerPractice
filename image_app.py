@@ -1,10 +1,12 @@
 import sys
+
 import cv2
 import numpy as np
-from PyQt5.QtWidgets import QApplication, QMainWindow, QInputDialog, \
-    QFileDialog, QErrorMessage, QLabel
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QImage, QPixmap
-from PyQt5.QtCore import Qt, QPoint
+from PyQt5.QtWidgets import QApplication, QMainWindow, QInputDialog, \
+    QFileDialog, QErrorMessage
+
 from interface import Ui_MainWindow  # Импортируем интерфейс
 
 
@@ -68,7 +70,8 @@ class ImageApp(QMainWindow, Ui_MainWindow):
                                                    Qt.KeepAspectRatio))
             self.image.setAlignment(Qt.AlignCenter)
             self.shapeLabel.setAlignment(Qt.AlignCenter)
-            self.shapeLabel.setText("{}×{}".format(*self.current_image.shape[:2]))
+            self.shapeLabel.setText(
+                "{}×{}".format(*self.current_image.shape[:2]))
 
     def show_channel(self, channel):
         if self.current_image is None:
@@ -115,7 +118,8 @@ class ImageApp(QMainWindow, Ui_MainWindow):
             M[1, 2] += (new_h / 2) - center[1]
 
             # Выполнение поворота с новыми размерами
-            self.current_image = cv2.warpAffine(self.current_image, M, (new_w, new_h))
+            self.current_image = cv2.warpAffine(self.current_image, M,
+                                                (new_w, new_h))
 
             self.display_image()
 
