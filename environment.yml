@@ -1,0 +1,8 @@
+name: image_app_env
+dependencies:
+  - python=3.6
+  - pyqt
+  - opencv
+  - numpy
+  - pip:
+    - opencv-python-headless==4.5.2.52
