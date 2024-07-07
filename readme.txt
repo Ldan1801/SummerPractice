@@ -1,14 +1,12 @@
 1)Клонирование репозитория:
 
-git clone <URL_ВАШЕГО_РЕПОЗИТОРИЯ>
-cd <ИМЯ_РЕПОЗИТОРИЯ>
-Создание и активация среды Conda:
+git clone https://github.com/Ldan1801/SummerPractice
+cd SummerPractice
 
 2.1)Создание и активация среды Conda:
 
 conda env create -f environment.yml
 conda activate image_app_env
-Запуск приложения:
 
 ИЛИ
 
@@ -19,4 +17,5 @@ venv\Scripts\activate
 pip install -r requirements.txt
 
 3)Запуск приложения
+
 python image_app.py
