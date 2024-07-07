@@ -12,6 +12,10 @@ from interface import Ui_MainWindow  # Импортируем интерфейс
 
 class ImageApp(QMainWindow, Ui_MainWindow):
     def __init__(self):
+        """
+        Конструктор класса ImageApp. Инициализирует пользовательский интерфейс
+        и подключает кнопки к соответствующим методам.
+        """
         super().__init__()
         self.setupUi(self)
         self.loaded_image = None
@@ -32,6 +36,9 @@ class ImageApp(QMainWindow, Ui_MainWindow):
         self.saveAsButton.clicked.connect(self.save_image_as)
 
     def load_image(self):
+        """
+        Загружает изображение с диска и отображает его на виджете QLabel.
+        """
         options = QFileDialog.Options()
         fileName, _ = QFileDialog.getOpenFileName(self,
                                                   "Загрузить изображение", "",
@@ -44,6 +51,9 @@ class ImageApp(QMainWindow, Ui_MainWindow):
             self.display_image()
 
     def capture_image(self):
+        """
+        Захватывает изображение с веб-камеры и отображает его на виджете QLabel.
+        """
         cap = cv2.VideoCapture(0)
         if not cap.isOpened():
             self.show_error("Не удалось подключиться к веб-камере.")
@@ -59,6 +69,9 @@ class ImageApp(QMainWindow, Ui_MainWindow):
             self.show_error("Не удалось сделать снимок с веб-камеры.")
 
     def display_image(self):
+        """
+        Отображает текущее изображение на виджете QLabel.
+        """
         if self.current_image is not None:
             rgb_image = cv2.cvtColor(self.current_image, cv2.COLOR_BGR2RGB)
             h, w, ch = rgb_image.shape
@@ -74,6 +87,11 @@ class ImageApp(QMainWindow, Ui_MainWindow):
                 "{}×{}".format(*self.current_image.shape[:2]))
 
     def show_channel(self, channel):
+        """
+        Отображает один из цветовых каналов изображения.
+        :param channel: Индекс цветового канала (0 - синий, 1 - зеленый,
+        2 - красный).
+        """
         if self.current_image is None:
             self.show_error("Пожалуйста, загрузите изображение.")
             return
@@ -83,6 +101,9 @@ class ImageApp(QMainWindow, Ui_MainWindow):
         self.display_image()
 
     def reset_image(self):
+        """
+        Сбрасывает текущее изображение до исходного загруженного изображения.
+        """
         if self.current_image is None:
             self.show_error("Пожалуйста, загрузите изображение.")
             return
@@ -90,6 +111,9 @@ class ImageApp(QMainWindow, Ui_MainWindow):
         self.display_image()
 
     def show_negative(self):
+        """
+        Отображает негативное изображение.
+        """
         if self.current_image is None:
             self.show_error("Пожалуйста, загрузите изображение.")
             return
@@ -97,6 +121,9 @@ class ImageApp(QMainWindow, Ui_MainWindow):
         self.display_image()
 
     def rotate_image(self):
+        """
+        Вращает изображение на заданный угол.
+        """
         if self.current_image is None:
             self.show_error("Пожалуйста, загрузите изображение.")
             return
@@ -124,6 +151,10 @@ class ImageApp(QMainWindow, Ui_MainWindow):
             self.display_image()
 
     def draw_circle(self):
+        """
+        Рисует круг на изображении с заданными пользователем координатами
+        центра и радиусом.
+        """
         if self.loaded_image is None:
             self.show_error("Пожалуйста, загрузите изображение.")
             return
@@ -147,6 +178,11 @@ class ImageApp(QMainWindow, Ui_MainWindow):
         self.display_image()
 
     def save_image(self):
+        """
+        Сохраняет текущее изображение. Если путь к изображению известен,
+        сохраняет по этому пути,иначе вызывает метод сохранения как нового
+        файла.
+        """
         if self.loaded_image is not None:
             if self.image_path:
                 self.loaded_image = self.current_image
@@ -158,6 +194,10 @@ class ImageApp(QMainWindow, Ui_MainWindow):
                 "Пожалуйста, загрузите или создайте изображение перед сохранением.")
 
     def save_image_as(self):
+        """
+        Сохраняет текущее изображение как новый файл,запрашивая у пользователя
+        путь для сохранения.
+        """
         if self.loaded_image is not None:
             options = QFileDialog.Options()
             fileName, _ = QFileDialog.getSaveFileName(self, "Сохранить как",
@@ -173,6 +213,10 @@ class ImageApp(QMainWindow, Ui_MainWindow):
                 "Пожалуйста, загрузите или создайте изображение перед сохранением.")
 
     def show_error(self, message):
+        """
+        Отображает сообщение об ошибке.
+        :param message: Текст сообщения об ошибке.
+        """
         error_dialog = QErrorMessage(self)
         error_dialog.showMessage(message)
 
