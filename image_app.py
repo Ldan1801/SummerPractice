@@ -131,7 +131,7 @@ class ImageApp(QMainWindow, Ui_MainWindow):
                                            "Введите угол вращения:", 0, -360,
                                            360, 1)
         if ok:
-            (h, w) = self.current_image[:2]
+            (h, w) = self.current_image.shape[:2]
             center = (w // 2, h // 2)
 
             cos = np.abs(np.cos(np.radians(angle)))
